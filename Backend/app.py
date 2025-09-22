@@ -47,5 +47,7 @@ def create_app():
     return app
 
 if __name__ == "__main__":
+ app = create_app()   # ← cria a instância da aplicação
+ port = int(os.environ.get("PORT", 7000))
 
- serve(create_app(), host="0.0.0.0", port=80)
+ serve(app, host="0.0.0.0", port=port)
