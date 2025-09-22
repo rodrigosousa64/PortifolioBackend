@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from pathlib import Path
-
+from waitress import serve
 from flask_cors import CORS
 
 
@@ -46,5 +46,6 @@ def create_app():
 
     return app
 
+if __name__ == "__main__":
 
-
+ serve(create_app(), host="0.0.0.0", port=80)
