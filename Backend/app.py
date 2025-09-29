@@ -18,10 +18,7 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
 
-     CORS(app, resources={
-    r"/admin/*": {"origins": "https://rodrigo644.squareweb.app"}
-})  # Habilita CORS para todas as rotas
-
+    CORS(app)
 
     print("DATABASE_URL:", os.getenv("DATABASE_URL"))
     print("SECRET_KEY:", os.getenv("SECRET_KEY"))
