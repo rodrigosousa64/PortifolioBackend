@@ -26,7 +26,6 @@ def create_app():
     print("Environment Variables:", env_path)
 
     # Configurações
-    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -36,13 +35,22 @@ def create_app():
     # ✅ Importar modelos para migrations funcionarem
     with app.app_context():
         from models import Project
+        from models import Usuario
         print(f"Modelo Project importado: {Project}")
+        print(f"Modelo User importado: {Usuario}")
 
     # ✅ Importar e registrar blueprints
-    from api.routes import health_bp, home_bp, project_bp
+    from api.routes import health_bp, home_bp, project_bp, migrations_bp, usuario_bp, auth_bp
+
+    app.register_blueprint(migrations_bp, url_prefix="/api")
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(home_bp, url_prefix="/") 
     app.register_blueprint(project_bp, url_prefix="/api")
+    app.register_blueprint(usuario_bp, url_prefix="/api")
+    app.register_blueprint(auth_bp, url_prefix="/api")  # ← registra o blueprint de auth
+
+
+    
 
     return app
 
