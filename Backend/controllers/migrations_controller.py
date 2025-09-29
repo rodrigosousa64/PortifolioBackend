@@ -18,7 +18,7 @@ class migrations_controller:
             ["flask", "db", "upgrade", "--directory", "infra/migrations"],
             check=True
         )
-            return jsonify({"status": "success", "message": "Migrations applied"})
+            return jsonify({"status": "success", "message": "Migrations appliedd"})
         except subprocess.CalledProcessError as e:
             return jsonify({"status": "error", "message": str(e)})
            
