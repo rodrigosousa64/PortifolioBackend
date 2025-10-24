@@ -36,11 +36,13 @@ def create_app():
         from app.api.routes.health_routes import health_bp
         from app.api.routes.home_routes import home_bp
         from app.api.routes.projects_routes import project_bp
+        from app.api.routes.usuario_routes import usuario_bp
         # ... importe os outros blueprints da mesma forma
         
         app.register_blueprint(health_bp, url_prefix="/api")
         app.register_blueprint(home_bp, url_prefix="/")
         app.register_blueprint(project_bp, url_prefix="/api")
+        app.register_blueprint(usuario_bp, url_prefix="/api")
         # ... registre os outros
 
     return app
