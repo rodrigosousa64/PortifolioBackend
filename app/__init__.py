@@ -4,10 +4,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from dotenv import load_dotenv
+from flask_login import LoginManager, login_user, UserMixin
+from app.infra.database import SessionLocal
 
-# Inicializa as extensões sem uma aplicação ainda
+
+
+# Inicializa as extensões
 db = SQLAlchemy()
 migrate = Migrate()
+login_manager = LoginManager()
+
 
 def create_app():
     """Application factory function."""
@@ -27,6 +33,38 @@ def create_app():
     # Inicializa as extensões com a aplicação
     db.init_app(app)
     migrate.init_app(app, db)
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        # 1. Abre a sessão do DB usando seu padrão SessionLocal
+        db_session = SessionLocal() 
+        try:
+            # 2. Importa o modelo Usuario
+            # (Importamos aqui porque o modelo só existe após o models ser carregado no app_context)
+            from .models import Usuario 
+            
+            # 3. Busca o usuário pelo ID
+            # Usa o método get() para buscar pela chave primária (ID)
+            # O .get() do SQLAlchemy requer a sessão.
+            # Convertemos o user_id para int, pois ele vem como string do cookie.
+            user = db_session.get(Usuario, int(user_id))
+            return user
+            
+        except Exception:
+             # Em caso de qualquer erro (ex: DB indisponível), o Flask-Login 
+            # não deve travar a aplicação. Retornar None é o padrão para falha.
+            return None 
+        finally:
+            # 4. Fechamento Obrigatório da sessão
+            db_session.close()
+
+
+
+
+
+
+    
 
     with app.app_context():
         # ✅ Importações agora são relativas ao pacote 'app'
@@ -37,12 +75,14 @@ def create_app():
         from app.api.routes.home_routes import home_bp
         from app.api.routes.projects_routes import project_bp
         from app.api.routes.usuario_routes import usuario_bp
+        from app.api.auth import auth_bp
         # ... importe os outros blueprints da mesma forma
         
         app.register_blueprint(health_bp, url_prefix="/api")
         app.register_blueprint(home_bp, url_prefix="/")
         app.register_blueprint(project_bp, url_prefix="/api")
         app.register_blueprint(usuario_bp, url_prefix="/api")
+        app.register_blueprint(auth_bp, url_prefix="/api")
         # ... registre os outros
 
     return app
