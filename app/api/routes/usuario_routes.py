@@ -8,6 +8,8 @@ usuario_bp = Blueprint("usuarios", __name__)
 
 # CRUD routes
 @usuario_bp.route("/usuarios", methods=["GET"])
+@login_required
+@admin_required
 def get_all_users():
     return UsuarioController.get_all_users()
 
