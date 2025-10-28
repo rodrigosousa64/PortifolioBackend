@@ -14,6 +14,8 @@ def get_all_users():
     return UsuarioController.get_all_users()
 
 @usuario_bp.route("/usuarios/<int:user_id>", methods=["GET"])
+@login_required
+@admin_required
 def get_user(user_id):
     return UsuarioController.get_user(user_id)
 
