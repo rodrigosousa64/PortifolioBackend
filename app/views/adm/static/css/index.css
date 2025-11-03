@@ -1,0 +1,97 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Fundo geral */
+body {
+  background-color: #000;
+  color: #f5f5f5;
+  line-height: 1.6;
+}
+
+/* Container geral */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Container dos cards */
+#portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 3rem;
+  width: 100%;
+  max-width: 1200px;
+}
+@keyframes mudanca-de-cor {
+  0% { background-color: #1e0f5d; }   /* Vermelho-alaranjado */
+  25% { background-color: #1336b5; }  /* Verde brilhante */
+  50% { background-color: #20338b; }  /* Azul elétrico */
+  75% { background-color: #0c225d; }  /* Magenta */
+  100% { background-color: #0e2b60; }  /* Volta para o início (ou uma cor próxima) */
+}
+
+/* Card estilo glass */
+.card {
+  animation: mudanca-de-cor 30s infinite alternate;
+  background: #1e6aac;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Animação hover */
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9);
+}
+
+
+
+
+
+
+/* Títulos */
+.card h3 {
+  
+  font-size: 1.5rem;
+  color: #000000;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ff007f;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+}
+
+/* Texto */
+.card p {
+  margin: 0.5rem 0;
+  color: #ffffff;
+}
+
+/* Links */
+.card a {
+  color: #ff007f;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.card a:hover {
+  color: #000000;
+}
+
+/* Data */
+.card em {
+  color: #aaa;
+  font-size: 0.9rem;
+}

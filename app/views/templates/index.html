@@ -1,0 +1,24 @@
+<!-- templates/projetos.html -->
+{% extends "base.html" %}
+
+{% block title %}Projetos{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="portfolio">
+  {% for p in projetos %}
+    <div class="card">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
+      <p><strong>Tecnologias:</strong> {{ p.technologies }}</p>
+      <p>
+        <a href="{{ p.git_link }}" target="_blank">GitHub</a> |
+        <a href="{{ p.hosted_link }}" target="_blank">Site</a>
+      </p>
+      <p><em>Postado em: {{ p.post_date }}</em></p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

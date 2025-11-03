@@ -1,5 +1,5 @@
 from flask import Blueprint
-from app.controllers.project_controller import ProjectController
+from app.api.projects.project_controller import ProjectController
 # Importe apenas o que for realmente usado
 from app.utils.auth_decorators import admin_required
 from flask_login import login_required

@@ -40,14 +40,8 @@ def create_app():
         # 1. Abre a sessão do DB usando seu padrão SessionLocal
         db_session = SessionLocal() 
         try:
-            # 2. Importa o modelo Usuario
-            # (Importamos aqui porque o modelo só existe após o models ser carregado no app_context)
-            from .models import Usuario 
             
-            # 3. Busca o usuário pelo ID
-            # Usa o método get() para buscar pela chave primária (ID)
-            # O .get() do SQLAlchemy requer a sessão.
-            # Convertemos o user_id para int, pois ele vem como string do cookie.
+            from .models import Usuario 
             user = db_session.get(Usuario, int(user_id))
             return user
             
@@ -59,30 +53,31 @@ def create_app():
             # 4. Fechamento Obrigatório da sessão
             db_session.close()
 
-
-
-
-
-
-    
-
     with app.app_context():
         # ✅ Importações agora são relativas ao pacote 'app'
         from . import models # Importa os modelos para o Alembic encontrá-los
         
         # ✅ Registra os blueprints
-        from app.api.routes.health_routes import health_bp
-        from app.api.routes.home_routes import home_bp
-        from app.api.routes.projects_routes import project_bp
-        from app.api.routes.usuario_routes import usuario_bp
+        from app.api.health.health_routes import health_bp
+        from app.api.home.home_routes import home_bp
+        from app.api.projects.projects_routes import project_bp
+        from app.api.usuarios.usuario_routes import usuario_bp
         from app.api.auth import auth_bp
+
+        from app.views.adm import admin_bp
+        from app.views.home import fhome_bp
         # ... importe os outros blueprints da mesma forma
         
         app.register_blueprint(health_bp, url_prefix="/api")
-        app.register_blueprint(home_bp, url_prefix="/")
+        app.register_blueprint(home_bp, url_prefix="/api")
         app.register_blueprint(project_bp, url_prefix="/api")
         app.register_blueprint(usuario_bp, url_prefix="/api")
         app.register_blueprint(auth_bp, url_prefix="/api")
+
+        app.register_blueprint(fhome_bp, url_prefix="/")
+        app.register_blueprint(admin_bp, url_prefix="/admin")
+        
+        
         # ... registre os outros
 
     return app

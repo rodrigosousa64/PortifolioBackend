@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        header { margin-bottom: 20px; }
+        nav a { margin-right: 15px; text-decoration: none; color: #007bff; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+        .card { border: 1px solid #000000; border-radius: 10px; padding: 1rem; background: #000000; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0 0 10px; }
+        .btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; }
+        .btn-primary { background: #007bff; color: rgb(0, 0, 0); }
+        .btn-danger { background: #dc3545; color: rgb(0, 0, 0); }
+        .btn-link { background: none; color: #007bff; text-decoration: underline; padding: 0; }
+        form { display: inline; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel - Projects</h1>
+        <nav>
+            <a href="{{ url_for('admin.projects_list') }}">All Projects</a>
+            <a href="{{ url_for('admin.project_new') }}">New Project</a>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,6 +1,6 @@
 # routes/usuario_routes.py
 from flask import Blueprint
-from app.controllers.usuario_controller import UsuarioController
+from app.api.usuarios.usuario_controller import UsuarioController
 from app.utils.auth_decorators import admin_required
 from flask_login import login_required
 
